@@ -1,0 +1,12 @@
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace AuthService.Data
+{
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext () : base ()
+        {
+
+        }
+    }
+}
