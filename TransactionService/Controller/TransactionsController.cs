@@ -20,7 +20,7 @@ namespace TransactionService.Controllers
 
         private Guid GetUserId()
         {
-            return Guid.Parse(User.FindFirstValue("sub"));
+            return Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
 
         [HttpPost]
