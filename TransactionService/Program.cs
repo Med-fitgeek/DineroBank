@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // -----------------------------------------
 // Load RSA PUBLIC KEY for verifying JWT
 // -----------------------------------------
-var publicKeyText = File.ReadAllText("keys/auth_public_key.pem");
+var publicKeyPath = builder.Configuration["Jwt:PublicKeyPath"];
+var publicKeyText = File.ReadAllText(publicKeyPath);
 var rsa = RSA.Create();
 rsa.ImportFromPem(publicKeyText);
 

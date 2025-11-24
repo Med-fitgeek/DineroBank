@@ -1,7 +1,10 @@
 using AccountService.Services;
 using AccountService.Services.Impl;
 using AuthService.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,28 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IAccountService, AccountServiceImpl>();
+
+var publicKeyPath = builder.Configuration["Jwt:PublicKeyPath"];
+var publicKeyText = File.ReadAllText(publicKeyPath);
+var rsa = RSA.Create();
+rsa.ImportFromPem(publicKeyText);
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "DineroBank.AuthService",
+            ValidAudience = "DineroBank",
+            IssuerSigningKey = new RsaSecurityKey(rsa)
+        };
+    });
+
 
 builder.Services.AddControllers();
 

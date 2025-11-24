@@ -2,7 +2,7 @@
 
 namespace AccountService.Services
 {
-    public interface IAccoutService
+    public interface IAccountService
     {
         Task<AccountResponse> CreateAccountAsync(Guid userId, AccountCreateRequest request);
         Task<List<AccountResponse>> GetAccountsAsync(Guid userId);

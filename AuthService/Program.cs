@@ -1,6 +1,6 @@
+using AuthService.Config;
 using AuthService.Services;
-using IdentityService.Data;
-using IdentityService.Services;
+using AuthService.Services.Impl;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -9,15 +9,17 @@ using System.Security.Cryptography;
 var builder = WebApplication.CreateBuilder(args);
 
 // Config DB
-builder.Services.AddDbContext<IdentityDbContext>(options =>
+builder.Services.AddDbContext<AuthService.Data.AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Services
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
+builder.Services.AddSingleton<JwtSettings>();
+
 
 // JWT validation (pour tests internes / Gateway)
 var publicKeyPath = builder.Configuration["Jwt:PublicKeyPath"];
-using var rsa = RSA.Create();
+var rsa = RSA.Create();
 rsa.ImportFromPem(File.ReadAllText(publicKeyPath));
 var key = new RsaSecurityKey(rsa);
 
@@ -39,6 +41,8 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = key
     };
 });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

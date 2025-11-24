@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccountService.Services.Impl
 {
-    public class AccountServiceImpl : IAccoutService
+    public class AccountServiceImpl : IAccountService
     {
         private readonly AccountDbContext _context;
 
