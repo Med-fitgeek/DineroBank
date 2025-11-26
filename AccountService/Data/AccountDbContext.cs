@@ -10,6 +10,8 @@ namespace AccountService.Data
         }
 
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<ProcessedMessage> ProcessedMessages { get; set; }
+
 
         public override int SaveChanges()
         {
