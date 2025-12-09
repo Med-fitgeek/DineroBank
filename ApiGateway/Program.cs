@@ -38,6 +38,17 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Anonymous", policy =>
+        policy.RequireAssertion(_ => true));
+
+    options.AddPolicy("Default", policy =>
+        policy.RequireAuthenticatedUser());
+});
+
+
 // YARP
 builder.Services.AddReverseProxy()
     .LoadFromConfig(config.GetSection("ReverseProxy"))
