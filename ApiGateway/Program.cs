@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Yarp.ReverseProxy.Transforms;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // config
@@ -37,7 +36,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.FromSeconds(30)
     };
 });
-
 
 builder.Services.AddAuthorization(options =>
 {
