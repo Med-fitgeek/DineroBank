@@ -6,7 +6,7 @@ namespace AccountService.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public Guid UserId { get; set; } // récupéré depuis le JWT
+        public Guid UserId { get; set; } // retrieved from JWT
         [MaxLength(50)]
         public required string AccountType { get; set; } // ex: Checking, Saving
         public decimal Balance { get; set; } = 0;

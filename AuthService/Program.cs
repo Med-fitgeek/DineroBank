@@ -8,16 +8,23 @@ using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Config DB
+
+// -------------------------------------------------------
+// Database
+// -------------------------------------------------------
 builder.Services.AddDbContext<AuthService.Data.AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+// --------------------------------------------------------
 // Services
+// --------------------------------------------------------
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
 builder.Services.AddSingleton<JwtSettings>();
 
-
-// JWT validation (pour tests internes / Gateway)
+// --------------------------------------------------------
+// JWT validation (for internal tests / Gateway)
+// ---------------------------------------------------------
 var publicKeyPath = builder.Configuration["Jwt:PublicKeyPath"];
 var rsa = RSA.Create();
 rsa.ImportFromPem(File.ReadAllText(publicKeyPath));

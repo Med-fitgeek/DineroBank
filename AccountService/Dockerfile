@@ -8,15 +8,15 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copier seulement les csproj pour le restore
+# Copy the csproj files to restore
 COPY ["AccountService/AccountService.csproj", "AccountService/"]
 COPY ["DineroBank.Shared/DineroBank.Shared.csproj", "DineroBank.Shared/"]
 
 RUN dotnet restore "AccountService/AccountService.csproj"
 
-# Copier tout le code source ensuite
-COPY AccountService/ AccountService/
-COPY DineroBank.Shared/ DineroBank.Shared/
+# Copy the necessary source code
+COPY ["AccountService/ AccountService/"]
+COPY ["DineroBank.Shared/ DineroBank.Shared/"]
 
 WORKDIR /src/AccountService
 RUN dotnet build "AccountService.csproj" -c $BUILD_CONFIGURATION -o /src/build

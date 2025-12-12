@@ -7,7 +7,7 @@ namespace TransactionService.Models
         [Key]
         public Guid Id { get; set; }
         public Guid AccountId { get; set; }
-        public Guid? TargetAccountId { get; set; } // transfert uniquement
+        public Guid? TargetAccountId { get; set; } // transfert only
         public decimal Amount { get; set; }
         public string? Type { get; set; } // CREDIT | DEBIT | TRANSFER
         public string? Description { get; set; }

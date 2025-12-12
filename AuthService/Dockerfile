@@ -8,14 +8,14 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copier les csproj pour restore
+# Copy the csproj files to restore
 COPY ["AuthService/AuthService.csproj", "AuthService/"]
 COPY ["DineroBank.Shared/DineroBank.Shared.csproj", "DineroBank.Shared/"]
 
 WORKDIR /src/AuthService
 RUN dotnet restore "AuthService.csproj"
 
-# Copier le code source nécessaire
+# Copy the necessary source code
 COPY ["AuthService/", "AuthService/"]
 COPY ["DineroBank.Shared/", "DineroBank.Shared/"]
 

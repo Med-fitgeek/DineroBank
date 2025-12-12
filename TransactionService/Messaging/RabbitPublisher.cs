@@ -47,7 +47,7 @@ namespace TransactionService.Messaging
 
         public void Dispose()
         {
-            // pas de fermeture ici: la connection est gérée par le DI et fermée à l'application stop
+            //no shutdown here: the connection is managed by the DI and closed when the application stops
         }
     }
 

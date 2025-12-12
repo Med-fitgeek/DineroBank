@@ -34,7 +34,7 @@ builder.Services.AddSingleton<IConnection>(sp =>
     return factory.CreateConnection();
 });
 
-// Le consumer va créer les queues/exchanges
+//  Consumer created with queues/exchanges
 builder.Services.AddHostedService<TransactionConsumer>();
 
 // ------------------------------

@@ -16,7 +16,7 @@ namespace AuthService.Config
         {
             _config = config;
 
-            // Charger la clé privée pour signer le JWT
+            // load the private key to  sign the JWT 
             var privateKeyPath = _config["Jwt:PrivateKeyPath"];
             var rsa = RSA.Create();
             rsa.ImportFromPem(File.ReadAllText(privateKeyPath));

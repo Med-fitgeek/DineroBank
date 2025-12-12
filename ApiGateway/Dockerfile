@@ -8,13 +8,13 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copier seulement les csproj pour le restore
+# Copy the csproj files to restore
 COPY ["ApiGateway/ApiGateway.csproj", "ApiGateway/"]
 
 RUN dotnet restore "ApiGateway/ApiGateway.csproj"
 
-# Copier tout le code source ensuite
-COPY ApiGateway/ ApiGateway/
+# Copy the necessary source code
+COPY ["ApiGateway/ ApiGateway/"]
 
 WORKDIR /src/ApiGateway
 RUN dotnet build "ApiGateway.csproj" -c $BUILD_CONFIGURATION -o /src/build
